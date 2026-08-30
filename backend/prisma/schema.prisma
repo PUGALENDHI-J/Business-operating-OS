@@ -1,0 +1,510 @@
+// TrinityAI Business OS — Prisma schema (PostgreSQL)
+// Mirrors the core data model from the build spec, Section 4.
+// Every business table carries: id, companyId (FK, indexed), createdAt, updatedAt,
+// deletedAt (soft delete), isDemo. Financial mutations (payments, invoice status,
+// revenue ledger writes) are expected to happen inside a single Prisma
+// `$transaction` in the service layer — see src/services/leadService.ts for the
+// reference pattern this schema is designed to support.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  MANAGER
+  SALES
+  EMPLOYEE
+  FINANCE
+}
+
+enum CompanyStage {
+  FOUNDER
+  FREELANCER
+  AGENCY
+  TEAM
+  COMPANY
+}
+
+model Company {
+  id        String   @id @default(uuid())
+  name      String
+  stage     CompanyStage @default(FOUNDER)
+  currency  String   @default("INR")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  users        User[]
+  leads        Lead[]
+  clients      Client[]
+  deals        Deal[]
+  proposals    Proposal[]
+  services     Service[]
+  projects     Project[]
+  tasks        Task[]
+  revenue      RevenueEntry[]
+  expenses     Expense[]
+  invoices     Invoice[]
+  payments     Payment[]
+  adCampaigns  AdCampaign[]
+  goals        Goal[]
+  documents    Document[]
+  notifications Notification[]
+  activities   Activity[]
+  auditLogs    AuditLog[]
+  aiInsights   AiInsight[]
+}
+
+model User {
+  id        String   @id @default(uuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  name      String
+  email     String   @unique
+  passwordHash String?
+  role      Role     @default(EMPLOYEE)
+  avatarInitials String @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isDemo    Boolean  @default(false)
+
+  ownedDeals    Deal[]    @relation("DealOwner")
+  ownedProjects Project[] @relation("ProjectOwner")
+  assignedTasks Task[]    @relation("TaskAssignee")
+  assignedLeads Lead[]    @relation("LeadAssignee")
+
+  @@index([companyId])
+}
+
+model Lead {
+  id             String   @id @default(uuid())
+  companyId      String
+  company        Company  @relation(fields: [companyId], references: [id])
+  name           String
+  companyName    String
+  email          String?
+  phone          String?
+  source         String
+  score          Int      @default(0)
+  status         String   @default("New")
+  assignedToId   String?
+  assignedTo     User?    @relation("LeadAssignee", fields: [assignedToId], references: [id])
+  nextFollowUp   DateTime?
+  notes          String?
+  convertedClientId String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+  isDemo         Boolean  @default(false)
+
+  @@index([companyId])
+  @@index([companyId, status])
+}
+
+model Client {
+  id           String   @id @default(uuid())
+  companyId    String
+  company      Company  @relation(fields: [companyId], references: [id])
+  name         String
+  logoInitial  String   @default("")
+  status       String   @default("Active")
+  descriptor   String?
+  location     String?
+  website      String?
+  healthScore  Int      @default(50)
+  sourceLeadId String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  deletedAt    DateTime?
+  isDemo       Boolean  @default(false)
+
+  contacts Contact[]
+  deals    Deal[]
+  projects Project[]
+  invoices Invoice[]
+  revenue  RevenueEntry[]
+  proposals Proposal[]
+
+  @@index([companyId])
+}
+
+model Contact {
+  id        String   @id @default(uuid())
+  companyId String
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id])
+  name      String
+  role      String?
+  email     String?
+  phone     String?
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isDemo    Boolean  @default(false)
+
+  @@index([companyId])
+  @@index([clientId])
+}
+
+model DealStageDef {
+  id        String @id @default(uuid())
+  companyId String
+  key       String
+  label     String
+  order     Int
+
+  @@unique([companyId, key])
+}
+
+model Deal {
+  id           String   @id @default(uuid())
+  companyId    String
+  company      Company  @relation(fields: [companyId], references: [id])
+  title        String
+  clientId     String?
+  client       Client?  @relation(fields: [clientId], references: [id])
+  leadId       String?
+  value        Decimal  @default(0) @db.Decimal(14, 2)
+  probability  Int      @default(0)
+  stage        String   @default("New")
+  ownerId      String?
+  owner        User?    @relation("DealOwner", fields: [ownerId], references: [id])
+  expectedClose DateTime?
+  convertedProjectId String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  deletedAt    DateTime?
+  isDemo       Boolean  @default(false)
+
+  proposals Proposal[]
+  projects  Project[]
+
+  @@index([companyId])
+  @@index([companyId, stage])
+}
+
+model Proposal {
+  id             String   @id @default(uuid())
+  companyId      String
+  company        Company  @relation(fields: [companyId], references: [id])
+  proposalNumber String
+  clientId       String?
+  client         Client?  @relation(fields: [clientId], references: [id])
+  dealId         String?
+  deal           Deal?    @relation(fields: [dealId], references: [id])
+  title          String
+  amount         Decimal  @db.Decimal(14, 2)
+  status         String   @default("Draft")
+  issueDate      DateTime @default(now())
+  validUntil     DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  deletedAt      DateTime?
+  isDemo         Boolean  @default(false)
+
+  @@index([companyId])
+}
+
+model Service {
+  id           String   @id @default(uuid())
+  companyId    String
+  company      Company  @relation(fields: [companyId], references: [id])
+  name         String
+  category     String?
+  defaultPrice Decimal  @db.Decimal(14, 2)
+  billingType  String   @default("One-time")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  deletedAt    DateTime?
+  isDemo       Boolean  @default(false)
+
+  @@index([companyId])
+}
+
+model Project {
+  id        String   @id @default(uuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  name      String
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id])
+  status    String   @default("Planning")
+  progress  Int      @default(0)
+  deadline  DateTime?
+  ownerId   String?
+  owner     User?    @relation("ProjectOwner", fields: [ownerId], references: [id])
+  budget    Decimal  @default(0) @db.Decimal(14, 2)
+  dealId    String?
+  deal      Deal?    @relation(fields: [dealId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isDemo    Boolean  @default(false)
+
+  tasks    Task[]
+  invoices Invoice[]
+
+  @@index([companyId])
+  @@index([companyId, status])
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  title       String
+  projectId   String?
+  project     Project? @relation(fields: [projectId], references: [id])
+  status      String   @default("To Do")
+  priority    String   @default("MEDIUM")
+  assigneeId  String?
+  assignee    User?    @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  dueDate     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  isDemo      Boolean  @default(false)
+
+  comments TaskComment[]
+
+  @@index([companyId])
+  @@index([companyId, status])
+}
+
+model TaskComment {
+  id        String   @id @default(uuid())
+  companyId String
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id])
+  authorId  String
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isDemo    Boolean  @default(false)
+
+  @@index([taskId])
+}
+
+model RevenueEntry {
+  id          String   @id @default(uuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  date        DateTime @default(now())
+  clientId    String?
+  client      Client?  @relation(fields: [clientId], references: [id])
+  service     String?
+  amount      Decimal  @db.Decimal(14, 2)
+  isRecurring Boolean  @default(false)
+  invoiceId   String?
+  invoice     Invoice? @relation(fields: [invoiceId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  isDemo      Boolean  @default(false)
+
+  @@index([companyId])
+  @@index([companyId, date])
+}
+
+model Expense {
+  id        String   @id @default(uuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  date      DateTime @default(now())
+  category  String
+  vendor    String
+  amount    Decimal  @db.Decimal(14, 2)
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isDemo    Boolean  @default(false)
+
+  @@index([companyId])
+  @@index([companyId, date])
+}
+
+model Invoice {
+  id            String   @id @default(uuid())
+  companyId     String
+  company       Company  @relation(fields: [companyId], references: [id])
+  invoiceNumber String
+  clientId      String
+  client        Client   @relation(fields: [clientId], references: [id])
+  issueDate     DateTime @default(now())
+  dueDate       DateTime
+  amount        Decimal  @db.Decimal(14, 2)
+  amountPaid    Decimal  @default(0) @db.Decimal(14, 2)
+  status        String   @default("Draft")
+  projectId     String?
+  project       Project? @relation(fields: [projectId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+  isDemo        Boolean  @default(false)
+
+  payments Payment[]
+  revenue  RevenueEntry[]
+
+  @@index([companyId])
+  @@index([companyId, status])
+}
+
+model Payment {
+  id        String   @id @default(uuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  invoiceId String
+  invoice   Invoice  @relation(fields: [invoiceId], references: [id])
+  amount    Decimal  @db.Decimal(14, 2)
+  date      DateTime @default(now())
+  method    String   @default("Bank Transfer")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isDemo    Boolean  @default(false)
+
+  @@index([companyId])
+  @@index([invoiceId])
+}
+
+model AdCampaign {
+  id                String   @id @default(uuid())
+  companyId         String
+  company           Company  @relation(fields: [companyId], references: [id])
+  channel           String
+  name              String
+  spend             Decimal  @default(0) @db.Decimal(14, 2)
+  leadsGenerated    Int      @default(0)
+  clientsGenerated  Int      @default(0)
+  revenueAttributed Decimal  @default(0) @db.Decimal(14, 2)
+  status            String   @default("Active")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  deletedAt         DateTime?
+  isDemo            Boolean  @default(false)
+
+  @@index([companyId])
+}
+
+model Goal {
+  id          String   @id @default(uuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  title       String
+  metric      String
+  targetValue Decimal  @db.Decimal(14, 2)
+  currentValue Decimal @default(0) @db.Decimal(14, 2)
+  startDate   DateTime @default(now())
+  endDate     DateTime
+  status      String   @default("On Track")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  isDemo      Boolean  @default(false)
+
+  progressEntries GoalProgress[]
+
+  @@index([companyId])
+}
+
+model GoalProgress {
+  id          String   @id @default(uuid())
+  goalId      String
+  goal        Goal     @relation(fields: [goalId], references: [id])
+  periodLabel String
+  target      Decimal  @db.Decimal(14, 2)
+  actual      Decimal  @db.Decimal(14, 2)
+  createdAt   DateTime @default(now())
+
+  @@index([goalId])
+}
+
+model Document {
+  id         String   @id @default(uuid())
+  companyId  String
+  company    Company  @relation(fields: [companyId], references: [id])
+  name       String
+  category   String
+  linkedType String?
+  linkedId   String?
+  sizeKb     Int      @default(0)
+  storageUrl String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  deletedAt  DateTime?
+  isDemo     Boolean  @default(false)
+
+  @@index([companyId])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  userId    String?
+  title     String
+  body      String
+  type      String   @default("info")
+  read      Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+
+  @@index([companyId])
+}
+
+model Activity {
+  id         String   @id @default(uuid())
+  companyId  String
+  company    Company  @relation(fields: [companyId], references: [id])
+  entityType String
+  entityId   String
+  actorId    String?
+  summary    String
+  createdAt  DateTime @default(now())
+
+  @@index([companyId])
+  @@index([entityType, entityId])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  companyId  String
+  company    Company  @relation(fields: [companyId], references: [id])
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String
+  meta       Json?
+  createdAt  DateTime @default(now())
+
+  @@index([companyId])
+}
+
+model AiInsight {
+  id         String   @id @default(uuid())
+  companyId  String
+  company    Company  @relation(fields: [companyId], references: [id])
+  title      String
+  body       String
+  severity   String   @default("info")
+  source     String
+  entityType String?
+  entityId   String?
+  dismissed  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  isDemo     Boolean  @default(false)
+
+  @@index([companyId])
+}
