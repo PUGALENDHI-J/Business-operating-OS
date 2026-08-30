@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TrinityAI Business OS - Dashboard (Empty State)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#edeef0",
+                        "on-primary-container": "#7c839b",
+                        "primary-container": "#131b2e",
+                        "surface-variant": "#e1e2e4",
+                        "inverse-surface": "#2e3132",
+                        "on-secondary-fixed-variant": "#812900",
+                        "primary-fixed": "#dae2fd",
+                        "inverse-on-surface": "#f0f1f3",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e7e8ea",
+                        "on-surface-variant": "#45464d",
+                        "surface-container-low": "#f2f4f6",
+                        "tertiary": "#000000",
+                        "secondary-fixed-dim": "#ffb59a",
+                        "surface-container-highest": "#e1e2e4",
+                        "tertiary-container": "#0b1c30",
+                        "inverse-primary": "#bec6e0",
+                        "on-secondary-fixed": "#380d00",
+                        "surface-dim": "#d9dadc",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "on-secondary-container": "#5b1b00",
+                        "outline-variant": "#c6c6cd",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "secondary-container": "#ff6a2b",
+                        "outline": "#76777d",
+                        "primary-fixed-dim": "#bec6e0",
+                        "surface": "#f8f9fb",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "surface-bright": "#f8f9fb",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed": "#ffdbcf",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#000000",
+                        "on-tertiary-container": "#75859d",
+                        "on-background": "#191c1e",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#131b2e",
+                        "background": "#f8f9fb",
+                        "secondary": "#a83900",
+                        "surface-tint": "#565e74",
+                        "tertiary-fixed": "#d3e4fe",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "edge-margin-desktop": "40px",
+                        "gutter": "24px",
+                        "stack-md": "16px",
+                        "container-max": "1440px",
+                        "edge-margin-mobile": "16px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Manrope"],
+                        "headline-lg-mobile": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "body-sm": ["Manrope"],
+                        "metric-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "metric-lg": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "label-bold": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "metric-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "metric-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Hide scrollbar for clean UI but allow scroll */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface h-screen overflow-hidden flex font-body-sm text-body-sm">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-[240px] z-50 bg-surface-container-low dark:bg-surface-container-high flex flex-col border-r border-outline-variant dark:border-outline">
+<div class="p-4 border-b border-outline-variant flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold">T</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-extrabold text-on-surface dark:text-on-surface leading-none">TrinityAI</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Business OS</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 border-l-4 border-secondary-container bg-surface-container dark:bg-surface-container-highest text-on-surface font-bold hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-bold text-label-bold">Main Menu</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-bold text-label-bold">Operations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-bold text-label-bold">Finance</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="font-label-bold text-label-bold">Marketing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">trending_up</span>
+<span class="font-label-bold text-label-bold">Growth</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-bold text-label-bold">AI</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-bold text-label-bold">Reports</span>
+</a>
+</div>
+<div class="p-4">
+<button class="w-full bg-primary text-on-primary rounded-full py-2 px-4 font-label-bold text-label-bold hover:ring-2 hover:ring-secondary-container hover:ring-offset-2 transition-all">+ Add Entity</button>
+</div>
+<div class="border-t border-outline-variant p-4 flex flex-col gap-2">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-bold text-label-bold">Help</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-bold text-label-bold">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col ml-[240px]">
+<!-- TopNavBar -->
+<header class="docked full-width top-0 sticky z-40 bg-surface dark:bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center w-full px-edge-margin-desktop py-stack-md h-[72px]">
+<div class="flex items-center gap-8">
+<!-- Search (Left) -->
+<div class="relative w-64 hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-primary text-body-sm font-body-sm h-10" placeholder="Search..." type="text"/>
+</div>
+<nav class="hidden md:flex gap-6 h-full items-center">
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary h-[72px] flex items-center hover:opacity-80 transition-opacity" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-on-surface dark:hover:text-on-surface transition-all h-[72px] flex items-center border-b-2 border-transparent hover:opacity-80 transition-opacity" href="#">Analytics</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-on-surface dark:hover:text-on-surface transition-all h-[72px] flex items-center border-b-2 border-transparent hover:opacity-80 transition-opacity" href="#">Team</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-outline">
+<button class="w-10 h-10 rounded-full hover:bg-surface-container flex items-center justify-center transition-colors"><span class="material-symbols-outlined">share</span></button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container flex items-center justify-center transition-colors"><span class="material-symbols-outlined">help</span></button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container flex items-center justify-center transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+</div>
+<div class="flex items-center gap-3 border-l border-outline-variant pl-4">
+<button class="bg-surface-container-lowest border border-outline-variant text-on-surface-variant rounded-full py-1.5 px-4 font-label-bold text-label-bold hover:bg-surface-container transition-colors h-10">Customize</button>
+<button class="bg-secondary-container text-on-primary rounded-full py-1.5 px-4 font-label-bold text-label-bold hover:opacity-90 transition-opacity h-10">Add New</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant ml-2">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A minimal, professional user avatar portrait of a modern business founder in a bright, light-mode studio setting. Clean white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQZXlQoLqx2TixfMTgNB88qsPawhh4ohLAubsEfnZolJfrGzz4hw9UZNPzC36YBHhqLkRyXjld0wn-WTG1vKUvmPuMKbcmAtZCk1mkUlXgz6b_lXX57gPlMOL_WYLCj2ijBS9ng7Z-i4YWsg4bacmTrreJnfziLh8fzuL3XJQXnHt_8EDPGza4nX3Ry09CDBemTUURpEI7bYcXYlug4zQ-81nVAPs239wEu8CaYCZ657dIr7Fpbkk2"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<main class="flex-1 overflow-y-auto p-edge-margin-desktop bg-surface pb-24">
+<div class="max-w-container-max mx-auto space-y-stack-lg">
+<!-- Welcome Header -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg font-semibold">Good Morning, Founder 👋</h2>
+<p class="text-on-surface-variant mt-2 font-body-lg text-body-lg">Here's what's happening across your business today.</p>
+</div>
+<div class="text-sm text-outline flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span>Today, Oct 24</span>
+</div>
+</div>
+<!-- KPI Cards (2x4 Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Revenue -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm flex flex-col h-[120px]">
+<div class="text-on-surface-variant font-label-bold text-label-bold uppercase flex justify-between items-center">
+                            Revenue
+                            <span class="material-symbols-outlined text-outline">payments</span>
+</div>
+<div class="font-metric-md text-metric-md mt-auto">₹0</div>
+<div class="text-outline text-xs mt-1 flex justify-between">
+<span>No data yet</span>
+<a class="text-primary hover:underline" href="#">+ Add</a>
+</div>
+</div>
+<!-- Net Profit -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm flex flex-col h-[120px]">
+<div class="text-on-surface-variant font-label-bold text-label-bold uppercase flex justify-between items-center">
+                            Net Profit
+                            <span class="material-symbols-outlined text-outline">trending_up</span>
+</div>
+<div class="font-metric-md text-metric-md mt-auto">₹0</div>
+<div class="text-outline text-xs mt-1 flex justify-between">
+<span>No data yet</span>
+<a class="text-primary hover:underline" href="#">+ Add</a>
+</div>
+</div>
+<!-- Pipeline -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm flex flex-col h-[120px]">
+<div class="text-on-surface-variant font-label-bold text-label-bold uppercase flex justify-between items-center">
+                            Pipeline
+                            <span class="material-symbols-outlined text-outline">view_kanban</span>
+</div>
+<div class="font-metric-md text-metric-md mt-auto">₹0</div>
+<div class="text-outline text-xs mt-1 flex justify-between">
+<span>No data yet</span>
+<a class="text-primary hover:underline" href="#">+ Add</a>
+</div>
+</div>
+<!-- MRR -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm flex flex-col h-[120px]">
+<div class="text-on-surface-variant font-label-bold text-label-bold uppercase flex justify-between items-center">
+                            MRR
+                            <span class="material-symbols-outlined text-outline">repeat</span>
+</div>
+<div class="font-metric-md text-metric-md mt-auto">₹0</div>
+<div class="text-outline text-xs mt-1 flex justify-between">
+<span>No data yet</span>
+<a class="text-primary hover:underline" href="#">+ Add</a>
+</div>
+</div>
+<!-- New Leads -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm flex flex-col h-[120px]">
+<div class="text-on-surface-variant font-label-bold text-label-bold uppercase flex justify-between items-center">
+                            New Leads
+                            <span class="material-symbols-outlined text-outline">group_add</span>
+</div>
+<div class="font-metric-md text-metric-md mt-auto">0</div>
+<div class="text-outline text-xs mt-1 flex justify-between">
+<span>No data yet</span>
+<a class="text-primary hover:underline" href="#">+ Add</a>
+</div>
+</div>
+<!-- New Clients -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm flex flex-col h-[120px]">
+<div class="text-on-surface-variant font-label-bold text-label-bold uppercase flex justify-between items-center">
+                            New Clients
+                            <span class="material-symbols-outlined text-outline">handshake</span>
+</div>
+<div class="font-metric-md text-metric-md mt-auto">0</div>
+<div class="text-outline text-xs mt-1 flex justify-between">
+<span>No data yet</span>
+<a class="text-primary hover:underline" href="#">+ Add</a>
+</div>
+</div>
+<!-- Ad Spend -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm flex flex-col h-[120px]">
+<div class="text-on-surface-variant font-label-bold text-label-bold uppercase flex justify-between items-center">
+                            Ad Spend
+                            <span class="material-symbols-outlined text-outline">ads_click</span>
+</div>
+<div class="font-metric-md text-metric-md mt-auto">₹0</div>
+<div class="text-outline text-xs mt-1 flex justify-between">
+<span>No data yet</span>
+<a class="text-primary hover:underline" href="#">+ Add</a>
+</div>
+</div>
+<!-- Goal % -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm flex flex-col h-[120px]">
+<div class="text-on-surface-variant font-label-bold text-label-bold uppercase flex justify-between items-center">
+                            Goal %
+                            <span class="material-symbols-outlined text-outline">flag</span>
+</div>
+<div class="font-metric-md text-metric-md mt-auto">0%</div>
+<div class="text-outline text-xs mt-1 flex justify-between">
+<span>No goals set</span>
+<a class="text-primary hover:underline" href="#">Set Goal</a>
+</div>
+</div>
+</div>
+<!-- Main Widgets Grid -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Left Column (8 cols) -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-gutter">
+<!-- Revenue vs Target Chart Placeholder -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm h-[320px] flex flex-col">
+<h3 class="font-headline-md text-headline-md mb-4">Revenue vs Target</h3>
+<div class="flex-1 border-2 border-dashed border-outline-variant rounded-lg flex flex-col items-center justify-center text-outline bg-surface-container-low/50">
+<span class="material-symbols-outlined text-4xl mb-2">bar_chart</span>
+<p class="font-body-sm text-body-sm">No revenue data to display</p>
+<button class="mt-4 bg-surface text-on-surface border border-outline-variant rounded-full py-1.5 px-4 font-label-bold text-label-bold hover:bg-surface-container transition-colors">Connect Data Source</button>
+</div>
+</div>
+<!-- 2 Col Split inside Left Column -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Sales Pipeline Kanban Summary -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm h-[280px] flex flex-col">
+<h3 class="font-headline-md text-headline-md mb-4">Sales Pipeline</h3>
+<div class="flex-1 flex flex-col gap-2">
+<div class="bg-surface-container-low rounded p-2 flex justify-between items-center text-sm border border-outline-variant/50 border-dashed">
+<span class="text-on-surface-variant">Lead In</span>
+<span class="text-outline">₹0 (0)</span>
+</div>
+<div class="bg-surface-container-low rounded p-2 flex justify-between items-center text-sm border border-outline-variant/50 border-dashed">
+<span class="text-on-surface-variant">Contact Made</span>
+<span class="text-outline">₹0 (0)</span>
+</div>
+<div class="bg-surface-container-low rounded p-2 flex justify-between items-center text-sm border border-outline-variant/50 border-dashed">
+<span class="text-on-surface-variant">Proposal Sent</span>
+<span class="text-outline">₹0 (0)</span>
+</div>
+<div class="bg-surface-container-low rounded p-2 flex justify-between items-center text-sm border border-outline-variant/50 border-dashed">
+<span class="text-on-surface-variant">Negotiation</span>
+<span class="text-outline">₹0 (0)</span>
+</div>
+</div>
+<div class="mt-4 text-center">
+<button class="text-primary font-label-bold text-label-bold hover:underline">+ Add Deal</button>
+</div>
+</div>
+<!-- Finance Summary -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm h-[280px] flex flex-col">
+<h3 class="font-headline-md text-headline-md mb-4">Finance Summary</h3>
+<div class="flex-1 flex flex-col justify-center items-center text-center px-4">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-outline text-3xl">account_balance_wallet</span>
+</div>
+<p class="text-on-surface-variant font-body-sm text-body-sm mb-4">Connect your bank or accounting software to see cashflow insights.</p>
+<button class="bg-primary text-on-primary rounded-full py-1.5 px-4 font-label-bold text-label-bold hover:ring-2 hover:ring-secondary-container hover:ring-offset-1 transition-all">Link Accounts</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (4 cols) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<!-- AI Insights Panel -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm relative overflow-hidden">
+<!-- Subtle AI flair -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-secondary-fixed-dim/20 rounded-full blur-2xl"></div>
+<h3 class="font-headline-md text-headline-md mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container">smart_toy</span>
+                                TrinityAI Insights
+                            </h3>
+<p class="text-on-surface-variant text-sm mb-4">Your business needs more data to generate actionable insights.</p>
+<div class="space-y-3">
+<div class="bg-surface rounded p-3 border border-outline-variant/50 flex gap-3 opacity-50">
+<span class="material-symbols-outlined text-outline mt-0.5">check_circle</span>
+<div class="flex-1">
+<div class="h-4 bg-surface-variant rounded w-3/4 mb-2 animate-pulse"></div>
+<div class="h-3 bg-surface-variant rounded w-1/2 animate-pulse"></div>
+</div>
+</div>
+<div class="bg-surface rounded p-3 border border-outline-variant/50 flex gap-3 opacity-40">
+<span class="material-symbols-outlined text-outline mt-0.5">check_circle</span>
+<div class="flex-1">
+<div class="h-4 bg-surface-variant rounded w-5/6 mb-2 animate-pulse"></div>
+<div class="h-3 bg-surface-variant rounded w-2/3 animate-pulse"></div>
+</div>
+</div>
+<div class="bg-surface rounded p-3 border border-outline-variant/50 flex gap-3 opacity-30">
+<span class="material-symbols-outlined text-outline mt-0.5">check_circle</span>
+<div class="flex-1">
+<div class="h-4 bg-surface-variant rounded w-4/5 mb-2 animate-pulse"></div>
+<div class="h-3 bg-surface-variant rounded w-1/3 animate-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Today's Tasks -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border border-outline-variant shadow-sm flex-1 flex flex-col min-h-[250px]">
+<h3 class="font-headline-md text-headline-md mb-4">Today's Tasks</h3>
+<div class="flex-1 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-outline text-4xl mb-2">task_alt</span>
+<p class="text-on-surface-variant font-body-sm text-body-sm mb-4">No tasks scheduled for today.</p>
+<button class="text-primary border border-outline-variant rounded-full py-1.5 px-4 font-label-bold text-label-bold hover:bg-surface-container transition-colors">+ Create Task</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Revenue &amp; P&amp;L - TrinityAI Business OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#45464d",
+                        "on-surface": "#191c1e",
+                        "inverse-surface": "#2e3132",
+                        "secondary-fixed-dim": "#ffb59a",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#f0f1f3",
+                        "surface": "#f8f9fb",
+                        "primary-container": "#131b2e",
+                        "on-primary-container": "#7c839b",
+                        "outline-variant": "#c6c6cd",
+                        "background": "#f8f9fb",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#565e74",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "inverse-primary": "#bec6e0",
+                        "secondary": "#a83900",
+                        "surface-variant": "#e1e2e4",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#380d00",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#bec6e0",
+                        "tertiary-fixed": "#d3e4fe",
+                        "surface-container-high": "#e7e8ea",
+                        "surface-container-low": "#f2f4f6",
+                        "primary": "#000000",
+                        "outline": "#76777d",
+                        "secondary-container": "#ff6a2b",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-secondary-fixed-variant": "#812900",
+                        "on-background": "#191c1e",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f8f9fb",
+                        "tertiary": "#000000",
+                        "surface-dim": "#d9dadc",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "on-secondary-container": "#5b1b00",
+                        "surface-container": "#edeef0",
+                        "on-tertiary-container": "#75859d",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "primary-fixed": "#dae2fd",
+                        "tertiary-container": "#0b1c30",
+                        "secondary-fixed": "#ffdbcf",
+                        "on-primary-fixed": "#131b2e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "edge-margin-desktop": "40px",
+                        "gutter": "24px",
+                        "edge-margin-mobile": "16px",
+                        "container-max": "1440px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-lg-mobile": ["Manrope"],
+                        "body-sm": ["Manrope"],
+                        "metric-md": ["Manrope"],
+                        "metric-lg": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-bold": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "metric-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "metric-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<!-- Chart.js for Revenue vs Expenses Chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-background text-on-surface font-body-lg min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full border-r border-outline-variant bg-surface-container-low fixed left-0 top-0 w-[240px] z-50">
+<div class="p-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary text-on-primary flex items-center justify-center font-bold">T</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-extrabold text-on-surface">TrinityAI</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Business OS</p>
+</div>
+</div>
+</div>
+<div class="px-4 py-2">
+<button class="w-full bg-primary text-on-primary rounded-full py-2 font-label-bold text-label-bold hover:bg-opacity-90 transition-opacity">
+                + Add Entity
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto mt-4 px-2">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-bold text-label-bold">Main Menu</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-bold text-label-bold">Operations</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2 border-l-4 border-secondary-container bg-surface-container text-on-surface font-bold rounded-r-lg" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-bold text-label-bold">Finance</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="font-label-bold text-label-bold">Marketing</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">trending_up</span>
+<span class="font-label-bold text-label-bold">Growth</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-bold text-label-bold">AI</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-bold text-label-bold">Reports</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="p-4 border-t border-outline-variant">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-bold text-label-bold">Help</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-bold text-label-bold">Settings</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 ml-0 md:ml-[240px] flex flex-col min-h-screen w-full">
+<!-- TopNavBar -->
+<header class="hidden md:flex justify-between items-center w-full px-edge-margin-desktop py-stack-md border-b border-outline-variant bg-surface sticky top-0 z-40 max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">TrinityAI Business OS</span>
+<nav class="flex gap-6">
+<a class="text-on-surface-variant hover:text-on-surface transition-all" href="#">Dashboard</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Analytics</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-all" href="#">Team</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 rounded-full border border-outline-variant bg-surface-container-lowest focus:border-primary focus:ring-0 outline-none text-body-sm w-64" placeholder="Search..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">share</span></button>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">help</span></button>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">notifications</span></button>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-surface-container-lowest border border-outline-variant text-on-surface-variant rounded-full px-4 py-2 font-label-bold text-label-bold hover:bg-surface-container-low transition-colors">Customize</button>
+<button class="bg-primary text-on-primary rounded-full px-4 py-2 font-label-bold text-label-bold hover:bg-opacity-90 transition-opacity">Add New</button>
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden border border-outline-variant">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLdgpDMRAj2umuoiKxYFXGXo16KK5NF84eWsZ8yqsvn6TKljvb8E9gumwAMXZAwFUIfAZUn9mKrIrkHXI6qOMgILuWP-AtmpvN_aDv-HwtW0dqYIKBk0r5-qoxWlV3DdOiX74GqvWBxLWSGZJ59zUQIsb2ymF9qcitRPK0LSg4DigQtRp3r9fO40ock8kyu0zenymx8TWuME3lcuwkHAH2SYvOK8UF1qSBjd_scaqZKnfaJcfQECpc"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 p-edge-margin-mobile md:p-edge-margin-desktop max-w-container-max mx-auto w-full space-y-stack-lg">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-bold">Revenue &amp; P&amp;L</h2>
+<p class="text-on-surface-variant font-body-sm mt-1">Financial performance overview for Q3 2023</p>
+</div>
+<div class="flex gap-3">
+<select class="bg-surface-container-lowest border border-outline-variant rounded-full px-4 py-2 font-label-bold text-label-bold text-on-surface focus:border-primary focus:ring-0 outline-none cursor-pointer">
+<option>This Month</option>
+<option>Last Month</option>
+<option>This Quarter</option>
+<option>Year to Date</option>
+</select>
+<button class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant text-on-surface rounded-full px-4 py-2 font-label-bold text-label-bold hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+                        Export
+                    </button>
+</div>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Revenue -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-md shadow-[0_2px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Revenue This Month</span>
+<span class="material-symbols-outlined text-outline">account_balance_wallet</span>
+</div>
+<div class="font-metric-md text-metric-md">$124,500</div>
+<div class="mt-2 flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined text-[#166534]" style="font-size: 16px;">trending_up</span>
+<span class="text-[#166534] font-medium">+12.5%</span>
+<span class="text-on-surface-variant">vs last month</span>
+</div>
+</div>
+<!-- MRR -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-md shadow-[0_2px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Monthly Rec. Rev (MRR)</span>
+<span class="material-symbols-outlined text-outline">autorenew</span>
+</div>
+<div class="font-metric-md text-metric-md">$85,200</div>
+<div class="mt-2 flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined text-[#166534]" style="font-size: 16px;">trending_up</span>
+<span class="text-[#166534] font-medium">+5.2%</span>
+<span class="text-on-surface-variant">vs last month</span>
+</div>
+</div>
+<!-- Gross Profit -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-md shadow-[0_2px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Gross Profit</span>
+<span class="material-symbols-outlined text-outline">savings</span>
+</div>
+<div class="font-metric-md text-metric-md">$92,130</div>
+<div class="mt-2 flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined text-[#166534]" style="font-size: 16px;">trending_up</span>
+<span class="text-[#166534] font-medium">+8.1%</span>
+<span class="text-on-surface-variant">vs last month</span>
+</div>
+</div>
+<!-- Net Margin -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-md shadow-[0_2px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Net Margin</span>
+<span class="material-symbols-outlined text-outline">percent</span>
+</div>
+<div class="font-metric-md text-metric-md">24.5%</div>
+<div class="mt-2 flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined text-[#991B1B]" style="font-size: 16px;">trending_down</span>
+<span class="text-[#991B1B] font-medium">-1.2%</span>
+<span class="text-on-surface-variant">vs last month</span>
+</div>
+</div>
+</div>
+<!-- Chart Section -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-md shadow-[0_2px_4px_rgba(0,0,0,0.04)]">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md">Revenue vs Expenses</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-label-sm font-label-bold bg-surface-container-low rounded-md">Weekly</button>
+<button class="px-3 py-1 text-label-sm font-label-bold bg-primary text-on-primary rounded-md">Monthly</button>
+</div>
+</div>
+<div class="w-full h-80">
+<canvas id="revenueChart"></canvas>
+</div>
+</div>
+<!-- Transactions Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_2px_4px_rgba(0,0,0,0.04)] overflow-hidden">
+<div class="p-stack-md border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md">Recent Revenue Transactions</h3>
+<button class="text-primary font-label-bold text-label-bold hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-outline uppercase font-label-bold text-label-sm">
+<th class="py-3 px-stack-md font-semibold">Date</th>
+<th class="py-3 px-stack-md font-semibold">Client</th>
+<th class="py-3 px-stack-md font-semibold">Service</th>
+<th class="py-3 px-stack-md font-semibold text-right">Amount</th>
+<th class="py-3 px-stack-md font-semibold">Status</th>
+</tr>
+</thead>
+<tbody class="text-body-sm divide-y divide-outline-variant">
+<tr class="h-[56px] hover:bg-surface-container-low transition-colors">
+<td class="px-stack-md">Oct 12, 2023</td>
+<td class="px-stack-md font-medium text-on-surface">Acme Corp</td>
+<td class="px-stack-md text-on-surface-variant">Enterprise SaaS License</td>
+<td class="px-stack-md text-right font-medium">$12,500.00</td>
+<td class="px-stack-md">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-[#E0F2FE] text-[#0369A1]">Paid</span>
+</td>
+</tr>
+<tr class="h-[56px] hover:bg-surface-container-low transition-colors">
+<td class="px-stack-md">Oct 10, 2023</td>
+<td class="px-stack-md font-medium text-on-surface">Globex Inc</td>
+<td class="px-stack-md text-on-surface-variant">Consulting Retainer</td>
+<td class="px-stack-md text-right font-medium">$8,000.00</td>
+<td class="px-stack-md">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-[#E0F2FE] text-[#0369A1]">Paid</span>
+</td>
+</tr>
+<tr class="h-[56px] hover:bg-surface-container-low transition-colors">
+<td class="px-stack-md">Oct 08, 2023</td>
+<td class="px-stack-md font-medium text-on-surface">Initech</td>
+<td class="px-stack-md text-on-surface-variant">Custom Implementation</td>
+<td class="px-stack-md text-right font-medium">$24,000.00</td>
+<td class="px-stack-md">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-[#FEF3C7] text-[#92400E]">Pending</span>
+</td>
+</tr>
+<tr class="h-[56px] hover:bg-surface-container-low transition-colors">
+<td class="px-stack-md">Oct 05, 2023</td>
+<td class="px-stack-md font-medium text-on-surface">Umbrella Corp</td>
+<td class="px-stack-md text-on-surface-variant">Monthly Subscription</td>
+<td class="px-stack-md text-right font-medium">$4,500.00</td>
+<td class="px-stack-md">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-[#FEE2E2] text-[#991B1B]">Overdue</span>
+</td>
+</tr>
+<tr class="h-[56px] hover:bg-surface-container-low transition-colors">
+<td class="px-stack-md">Oct 01, 2023</td>
+<td class="px-stack-md font-medium text-on-surface">Stark Industries</td>
+<td class="px-stack-md text-on-surface-variant">API Access Tier 3</td>
+<td class="px-stack-md text-right font-medium">$15,000.00</td>
+<td class="px-stack-md">
+<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-[#E0F2FE] text-[#0369A1]">Paid</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+<!-- Chart Initialization Script -->
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            
+            // Minimalist styling for chart
+            Chart.defaults.font.family = 'Manrope';
+            Chart.defaults.color = '#7c839b'; // on-primary-container approx
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    datasets: [
+                        {
+                            label: 'Revenue',
+                            data: [65000, 72000, 68000, 85000, 92000, 88000, 105000, 112000, 108000, 124500],
+                            borderColor: '#0F172A', // Primary dark
+                            backgroundColor: 'rgba(15, 23, 42, 0.05)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#0F172A',
+                            pointRadius: 3,
+                            pointHoverRadius: 6
+                        },
+                        {
+                            label: 'Expenses',
+                            data: [42000, 45000, 48000, 52000, 50000, 54000, 58000, 62000, 59000, 65000],
+                            borderColor: '#FF6A2B', // Accent
+                            backgroundColor: 'rgba(255, 106, 43, 0.05)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#FF6A2B',
+                            pointRadius: 0,
+                            pointHoverRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            align: 'end',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 8,
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#191c1e',
+                            titleFont: { family: 'Manrope', size: 14, weight: '600' },
+                            bodyFont: { family: 'Manrope', size: 13 },
+                            padding: 12,
+                            cornerRadius: 8,
+                            displayColors: true
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: '#e1e2e4', // surface-variant approx
+                                drawBorder: false,
+                                borderDash: [4, 4]
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value / 1000 + 'k';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body></html>

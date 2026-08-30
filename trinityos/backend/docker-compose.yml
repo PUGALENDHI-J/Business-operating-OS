@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: trinityai
+      POSTGRES_PASSWORD: trinityai
+      POSTGRES_DB: trinityai_business_os
+    ports:
+      - "5434:5432"
+    volumes:
+      - trinityai_pgdata:/var/lib/postgresql/data
+volumes:
+  trinityai_pgdata:
