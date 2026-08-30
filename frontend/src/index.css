@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------
+   TrinityOS design tokens — Light (default) and Dark. Every Tailwind
+   color utility (bg-surface, text-on-surface, border-outline-variant, ...)
+   resolves to one of these CSS variables via tailwind.config.js, so
+   switching the `dark` class on <html> re-themes the entire application
+   at once without touching individual components.
+
+   Palette matches the locked TrinityOS Business Intelligence design
+   system (Geist type, Primary Orange #FF5722, navy-on-white in light
+   mode / deep-navy surfaces in dark mode). The sidebar is intentionally
+   NOT theme-driven — it stays a fixed dark navy rail in both modes, per
+   the reference design — so it has its own always-on tokens below.
+   --------------------------------------------------------------------- */
+:root {
+  --color-surface: 241 245 249;
+  --color-surface-dim: 226 232 240;
+  --color-surface-bright: 248 250 252;
+  --color-surface-container-lowest: 255 255 255;
+  --color-surface-container-low: 248 250 252;
+  --color-surface-container: 241 245 249;
+  --color-surface-container-high: 230 235 241;
+  --color-surface-container-highest: 219 226 235;
+  --color-on-surface: 15 23 42;
+  --color-on-surface-variant: 71 85 105;
+  --color-inverse-surface: 30 41 59;
+  --color-inverse-on-surface: 240 245 255;
+  --color-outline: 100 116 139;
+  --color-outline-variant: 226 232 240;
+  --color-surface-tint: 255 87 34;
+  --color-primary: 255 87 34;
+  --color-on-primary: 255 255 255;
+  --color-primary-container: 255 219 209;
+  --color-on-primary-container: 84 18 0;
+  --color-inverse-primary: 255 181 160;
+  --color-secondary: 86 94 116;
+  --color-on-secondary: 255 255 255;
+  --color-secondary-container: 218 226 253;
+  --color-on-secondary-container: 63 70 92;
+  --color-tertiary: 0 108 73;
+  --color-on-tertiary: 255 255 255;
+  --color-tertiary-container: 209 250 229;
+  --color-on-tertiary-container: 0 49 31;
+  --color-error: 186 26 26;
+  --color-on-error: 255 255 255;
+  --color-error-container: 255 218 214;
+  --color-on-error-container: 147 0 10;
+  --color-primary-fixed: 255 219 209;
+  --color-primary-fixed-dim: 255 181 160;
+  --color-on-primary-fixed: 59 9 0;
+  --color-on-primary-fixed-variant: 134 34 0;
+  --color-secondary-fixed: 218 226 253;
+  --color-secondary-fixed-dim: 190 198 224;
+  --color-on-secondary-fixed: 19 27 46;
+  --color-on-secondary-fixed-variant: 63 70 92;
+  --color-tertiary-fixed: 111 251 190;
+  --color-tertiary-fixed-dim: 78 222 163;
+  --color-on-tertiary-fixed: 0 33 19;
+  --color-on-tertiary-fixed-variant: 0 82 54;
+  --color-background: 241 245 249;
+  --color-on-background: 15 23 42;
+  --color-surface-variant: 226 232 240;
+
+  /* Status pill tones */
+  --color-status-active-bg: 224 242 254;
+  --color-status-active-text: 3 105 161;
+  --color-status-overdue-bg: 254 226 226;
+  --color-status-overdue-text: 153 27 27;
+  --color-status-warning-bg: 254 243 199;
+  --color-status-warning-text: 146 64 14;
+  --color-status-success-bg: 209 250 229;
+  --color-status-success-text: 0 82 54;
+  --color-status-neutral-bg: 241 245 249;
+  --color-status-neutral-text: 71 85 105;
+  --color-border-hairline: 226 232 240;
+
+  /* Sidebar — fixed dark navy rail, identical in both themes */
+  --color-sidebar: 15 26 43;
+  --color-sidebar-elevated: 22 36 56;
+  --color-on-sidebar: 226 232 240;
+  --color-on-sidebar-muted: 148 163 184;
+  --color-sidebar-border: 255 255 255;
+  --color-sidebar-active-bg: 176 47 0;
+  --color-sidebar-active-text: 255 255 255;
+}
+
+.dark {
+  --color-surface: 11 28 48;
+  --color-surface-dim: 8 20 35;
+  --color-surface-bright: 22 38 58;
+  --color-surface-container-lowest: 33 49 69;
+  --color-surface-container-low: 24 39 59;
+  --color-surface-container: 33 49 69;
+  --color-surface-container-high: 42 60 82;
+  --color-surface-container-highest: 52 72 97;
+  --color-on-surface: 234 241 255;
+  --color-on-surface-variant: 159 176 201;
+  --color-inverse-surface: 234 241 255;
+  --color-inverse-on-surface: 11 28 48;
+  --color-outline: 124 138 158;
+  --color-outline-variant: 47 65 89;
+  --color-surface-tint: 255 138 96;
+  --color-primary: 255 106 43;
+  --color-on-primary: 255 255 255;
+  --color-primary-container: 84 18 0;
+  --color-on-primary-container: 255 219 209;
+  --color-inverse-primary: 176 47 0;
+  --color-secondary: 190 198 224;
+  --color-on-secondary: 19 27 46;
+  --color-secondary-container: 63 70 92;
+  --color-on-secondary-container: 218 226 253;
+  --color-tertiary: 78 222 163;
+  --color-on-tertiary: 0 33 19;
+  --color-tertiary-container: 0 49 31;
+  --color-on-tertiary-container: 111 251 190;
+  --color-error: 248 113 113;
+  --color-on-error: 69 10 10;
+  --color-error-container: 122 33 25;
+  --color-on-error-container: 255 218 214;
+  --color-primary-fixed: 255 219 209;
+  --color-primary-fixed-dim: 255 181 160;
+  --color-on-primary-fixed: 59 9 0;
+  --color-on-primary-fixed-variant: 134 34 0;
+  --color-secondary-fixed: 218 226 253;
+  --color-secondary-fixed-dim: 190 198 224;
+  --color-on-secondary-fixed: 19 27 46;
+  --color-on-secondary-fixed-variant: 63 70 92;
+  --color-tertiary-fixed: 111 251 190;
+  --color-tertiary-fixed-dim: 78 222 163;
+  --color-on-tertiary-fixed: 0 33 19;
+  --color-on-tertiary-fixed-variant: 0 82 54;
+  --color-background: 11 28 48;
+  --color-on-background: 234 241 255;
+  --color-surface-variant: 33 49 69;
+
+  --color-status-active-bg: 12 58 82;
+  --color-status-active-text: 125 211 252;
+  --color-status-overdue-bg: 76 17 22;
+  --color-status-overdue-text: 252 165 165;
+  --color-status-warning-bg: 74 53 16;
+  --color-status-warning-text: 252 211 77;
+  --color-status-success-bg: 0 49 31;
+  --color-status-success-text: 111 251 190;
+  --color-status-neutral-bg: 42 60 82;
+  --color-status-neutral-text: 203 213 225;
+  --color-border-hairline: 47 65 89;
+
+  /* Sidebar tokens repeated identically — the rail never changes with theme */
+  --color-sidebar: 15 26 43;
+  --color-sidebar-elevated: 22 36 56;
+  --color-on-sidebar: 226 232 240;
+  --color-on-sidebar-muted: 148 163 184;
+  --color-sidebar-border: 255 255 255;
+  --color-sidebar-active-bg: 255 87 34;
+  --color-sidebar-active-text: 255 255 255;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: 'Geist', 'Manrope', sans-serif;
+  background-color: rgb(var(--color-surface));
+  color: rgb(var(--color-on-surface));
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "tnum" 1;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 20px;
+  line-height: 1;
+  user-select: none;
+}
+.material-symbols-outlined.fill {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Hide scrollbars for the app chrome but keep them functional */
+.scrollbar-hide::-webkit-scrollbar { width: 0px; height: 0px; background: transparent; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgb(var(--color-outline-variant)); border-radius: 4px; }
+
+@media print {
+  .no-print { display: none !important; }
+}
+
+/* Focus ring: crisp accent ring, no glow */
+:focus-visible {
+  outline: 2px solid rgb(var(--color-primary));
+  outline-offset: 2px;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+.animate-pulse-soft {
+  animation: pulse-soft 1.8s ease-in-out infinite;
+}
+
+/* Give elements that opt into color transitions a smooth theme switch,
+   scoped (not *) so we don't fight layout/transform animations elsewhere. */
+.theme-transition, .theme-transition * {
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}

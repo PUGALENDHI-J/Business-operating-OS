@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Leads - TrinityAI Business OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#b7c8e1",
+                      "on-tertiary": "#ffffff",
+                      "inverse-primary": "#bec6e0",
+                      "on-secondary-fixed-variant": "#812900",
+                      "tertiary-container": "#0b1c30",
+                      "surface-dim": "#d9dadc",
+                      "tertiary-fixed": "#d3e4fe",
+                      "surface-tint": "#565e74",
+                      "outline-variant": "#c6c6cd",
+                      "primary-fixed": "#dae2fd",
+                      "inverse-surface": "#2e3132",
+                      "secondary-fixed": "#ffdbcf",
+                      "error": "#ba1a1a",
+                      "surface-container-high": "#e7e8ea",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "primary": "#000000",
+                      "on-secondary-fixed": "#380d00",
+                      "surface-bright": "#f8f9fb",
+                      "primary-fixed-dim": "#bec6e0",
+                      "surface-container-highest": "#e1e2e4",
+                      "on-error-container": "#93000a",
+                      "secondary-container": "#ff6a2b",
+                      "primary-container": "#131b2e",
+                      "on-primary-fixed": "#131b2e",
+                      "on-surface-variant": "#45464d",
+                      "background": "#f8f9fb",
+                      "tertiary": "#000000",
+                      "secondary-fixed-dim": "#ffb59a",
+                      "on-secondary": "#ffffff",
+                      "outline": "#76777d",
+                      "on-tertiary-fixed": "#0b1c30",
+                      "on-primary-container": "#7c839b",
+                      "on-error": "#ffffff",
+                      "on-surface": "#191c1e",
+                      "on-secondary-container": "#5b1b00",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-container": "#75859d",
+                      "surface-container-low": "#f2f4f6",
+                      "on-primary": "#ffffff",
+                      "secondary": "#a83900",
+                      "surface-container": "#edeef0",
+                      "surface": "#f8f9fb",
+                      "on-background": "#191c1e",
+                      "on-tertiary-fixed-variant": "#38485d",
+                      "inverse-on-surface": "#f0f1f3",
+                      "surface-variant": "#e1e2e4"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "stack-md": "16px",
+                      "stack-sm": "8px",
+                      "edge-margin-mobile": "16px",
+                      "container-max": "1440px",
+                      "stack-lg": "32px",
+                      "edge-margin-desktop": "40px"
+              },
+              "fontFamily": {
+                      "body-sm": ["Manrope"],
+                      "label-sm": ["Manrope"],
+                      "label-bold": ["Manrope"],
+                      "body-lg": ["Manrope"],
+                      "headline-lg-mobile": ["Manrope"],
+                      "headline-md": ["Manrope"],
+                      "metric-lg": ["Manrope"],
+                      "metric-md": ["Manrope"],
+                      "headline-lg": ["Manrope"]
+              },
+              "fontSize": {
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "metric-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "metric-md": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c6c6cd;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #76777d;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-sm min-h-screen overflow-hidden flex">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-[240px] z-50 bg-surface-container-low dark:bg-surface-container-high flex flex-col border-r border-outline-variant dark:border-outline">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold">
+                    T
+                </div>
+<div>
+<h1 class="font-headline-md text-headline-md font-extrabold text-on-surface dark:text-on-surface">TrinityAI</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Business OS</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-2 px-4 rounded-full font-label-bold text-label-bold hover:bg-secondary-container transition-colors mb-6 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                + Add Entity
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto px-4 space-y-1">
+<!-- Growth is considered active as Leads typically fall under Growth/Marketing -->
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-bold text-label-bold">Main Menu</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-bold text-label-bold">Operations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-bold text-label-bold">Finance</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="font-label-bold text-label-bold">Marketing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 border-l-4 border-secondary-container bg-surface-container dark:bg-surface-container-highest text-on-surface font-bold rounded-r-lg" href="#">
+<span class="material-symbols-outlined fill">trending_up</span>
+<span class="font-label-bold text-label-bold">Growth</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-bold text-label-bold">AI</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-bold text-label-bold">Reports</span>
+</a>
+</div>
+<div class="p-4 border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-bold text-label-bold">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-outline hover:text-on-surface hover:bg-surface-container-high dark:hover:bg-inverse-surface transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-bold text-label-bold">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col ml-[240px] w-[calc(100%-240px)] h-screen overflow-hidden bg-background">
+<!-- TopNavBar -->
+<header class="docked full-width top-0 sticky z-40 border-b border-outline-variant bg-surface dark:bg-surface-container-lowest">
+<div class="flex justify-between items-center w-full px-edge-margin-desktop py-stack-md">
+<div class="flex items-center gap-6 flex-1">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Search..." type="text"/>
+</div>
+<nav class="hidden md:flex gap-6">
+<!-- Dashboard is mapped to Team/Analytics/Dashboard -->
+<a class="text-on-surface-variant dark:text-outline hover:text-on-surface dark:hover:text-on-surface transition-all font-label-bold text-label-bold py-1" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-outline hover:text-on-surface dark:hover:text-on-surface transition-all font-label-bold text-label-bold py-1" href="#">Analytics</a>
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary font-label-bold text-label-bold py-1" href="#">Team</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-full transition-colors opacity-80 hover:opacity-100">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-full transition-colors opacity-80 hover:opacity-100">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-full transition-colors opacity-80 hover:opacity-100 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary-container rounded-full"></span>
+</button>
+</div>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<button class="px-4 py-2 border border-outline-variant text-on-surface-variant rounded-full font-label-bold text-label-bold hover:bg-surface-container-low transition-colors">Customize</button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-full font-label-bold text-label-bold hover:bg-secondary-container transition-colors">Add New</button>
+<img class="w-10 h-10 rounded-full border border-outline-variant object-cover ml-2" data-alt="A professional headshot of a person looking confident in a well-lit, modern corporate environment. The lighting is soft and neutral, enhancing a clean, contemporary aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXHP87fw-r2Q-Ar0flzQKkiBb9d66OkUgcBngSil4dr6nYvI4AVHy0TC0EqJ-kwpci-nCx6R0qR0ApwtStevokvbdByoe71K-rNU1cBsINM9UY5rjl-XiymOdMbtIgTWUnv3U4GsCu8JHO-92gPpHDe5xXl0m26AsjTBABosTvPzN8AR42deTy67NUBClbL3q0TW6M5v8rdIS1Hi-yQP7wb70J5Q6pOEQ8N0COgXC4e0jSymgkkqLC"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 overflow-y-auto p-edge-margin-desktop">
+<div class="max-w-container-max mx-auto space-y-stack-lg">
+<!-- Header & Toolbar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Leads</h2>
+<div class="flex flex-wrap items-center gap-3">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-surface border border-outline-variant rounded-lg text-on-surface font-label-sm text-label-sm hover:bg-surface-container-low transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">table_rows</span>
+                            Table View
+                            <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-1.5 bg-surface border border-outline-variant rounded-lg text-on-surface font-label-sm text-label-sm hover:bg-surface-container-low transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                            Filter
+                        </button>
+<button class="flex items-center gap-2 px-3 py-1.5 bg-surface border border-outline-variant rounded-lg text-on-surface font-label-sm text-label-sm hover:bg-surface-container-low transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">sort</span>
+                            Sort
+                        </button>
+<button class="flex items-center gap-2 px-3 py-1.5 bg-surface border border-outline-variant rounded-lg text-on-surface font-label-sm text-label-sm hover:bg-surface-container-low transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+                            Customize
+                        </button>
+<button class="flex items-center gap-2 px-3 py-1.5 bg-surface border border-outline-variant rounded-lg text-on-surface font-label-sm text-label-sm hover:bg-surface-container-low transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                            Export
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-secondary-container text-on-primary rounded-full font-label-bold text-label-bold hover:opacity-90 transition-opacity ml-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            + Add Lead
+                        </button>
+</div>
+</div>
+<!-- KPI Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="bg-surface rounded-xl p-stack-md border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Total Leads</p>
+<p class="font-metric-md text-metric-md text-on-surface">0</p>
+<p class="font-body-sm text-body-sm text-outline mt-1">No data yet</p>
+</div>
+<div class="bg-surface rounded-xl p-stack-md border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">New Leads (This Month)</p>
+<p class="font-metric-md text-metric-md text-on-surface">0</p>
+<p class="font-body-sm text-body-sm text-outline mt-1">No data yet</p>
+</div>
+<div class="bg-surface rounded-xl p-stack-md border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Hot Leads</p>
+<p class="font-metric-md text-metric-md text-on-surface">0</p>
+<p class="font-body-sm text-body-sm text-outline mt-1">No data yet</p>
+</div>
+<div class="bg-surface rounded-xl p-stack-md border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Conversion Rate %</p>
+<p class="font-metric-md text-metric-md text-on-surface">0%</p>
+<p class="font-body-sm text-body-sm text-outline mt-1">No data yet</p>
+</div>
+</div>
+<!-- Data Table Container (Empty State) -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col h-[500px]">
+<!-- Table Header -->
+<div class="flex items-center px-6 py-3 border-b border-outline-variant bg-surface-container-low text-outline font-label-bold text-label-bold uppercase text-[10px] tracking-wider">
+<div class="w-12"><input class="rounded border-outline-variant text-primary focus:ring-primary w-4 h-4" disabled="" type="checkbox"/></div>
+<div class="flex-1 min-w-[200px]">Lead Name</div>
+<div class="flex-1 min-w-[150px]">Company</div>
+<div class="flex-1 min-w-[120px]">Source</div>
+<div class="w-24 text-center">Score</div>
+<div class="w-32 text-center">Status</div>
+<div class="flex-1 min-w-[150px]">Assigned</div>
+<div class="flex-1 min-w-[120px]">Next Follow-up</div>
+</div>
+<!-- Empty State Content -->
+<div class="flex-1 flex flex-col items-center justify-center p-8 text-center bg-surface-bright">
+<div class="w-24 h-24 bg-surface-container-high rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-[48px] text-outline">group_add</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">No leads found</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mb-6">Your pipeline is currently empty. Start adding leads to track your sales process and monitor conversions.</p>
+<button class="px-6 py-3 bg-secondary-container text-on-primary rounded-full font-label-bold text-label-bold hover:opacity-90 transition-opacity shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                            + Add your first lead
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
