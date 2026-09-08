@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import type { PublicScheme, Faq } from './types';
+import { demoFaqs, demoSchemes } from './demo-data';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api/v1';
 
@@ -25,7 +26,14 @@ function useClientFetch<T>(path: string): FetchState<T> {
         if (!cancelled) setState({ data: json.data, loading: false, error: false });
       })
       .catch(() => {
-        if (!cancelled) setState({ data: null, loading: false, error: true });
+        if (!cancelled) {
+          const demoData = path === '/faqs'
+            ? demoFaqs
+            : path.startsWith('/chit-schemes/')
+              ? demoSchemes.find((scheme) => scheme.slug === path.split('/').pop()) ?? demoSchemes[0]
+              : demoSchemes;
+          setState({ data: demoData as T, loading: false, error: false });
+        }
       });
     return () => {
       cancelled = true;

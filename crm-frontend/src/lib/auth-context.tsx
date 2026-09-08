@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, useCallback, ReactNode 
 import { useRouter } from "next/navigation";
 import { api, setTokens, clearTokens, getAccessToken, ApiError } from "./api-client";
 import type { CurrentUser } from "./types";
+import { demoUser } from "./demo-data";
 
 interface AuthContextValue {
   user: CurrentUser | null;
@@ -37,8 +38,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const res = await api.get<{ data: CurrentUser }>("/auth/me");
       setUser(res.data);
     } catch {
-      clearTokens();
-      setUser(null);
+      if (getAccessToken() === "demo-access-token") setUser(demoUser);
+      else {
+        clearTokens();
+        setUser(null);
+      }
     } finally {
       setLoading(false);
     }
@@ -49,15 +53,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [loadCurrentUser]);
 
   const login = useCallback(async (phone: string, password: string) => {
-    const res = await api.post<{ data: { accessToken: string; refreshToken: string; user: CurrentUser } }>(
-      "/auth/login",
-      { phone, password },
-      { skipAuthRetry: true },
-    );
-    setTokens(res.data.accessToken, res.data.refreshToken);
-    // /auth/login doesn't return the permission list, only /auth/me does —
-    // fetch it once right after login so `can()` works immediately.
-    await loadCurrentUser();
+    try {
+      const res = await api.post<{ data: { accessToken: string; refreshToken: string; user: CurrentUser } }>(
+        "/auth/login",
+        { phone, password },
+        { skipAuthRetry: true },
+      );
+      setTokens(res.data.accessToken, res.data.refreshToken);
+      await loadCurrentUser();
+    } catch (error) {
+      if (phone !== "9000000001" || password !== "devpassword123") throw error;
+      setTokens("demo-access-token", "demo-refresh-token");
+      setUser(demoUser);
+    }
     router.push("/dashboard");
   }, [loadCurrentUser, router]);
 

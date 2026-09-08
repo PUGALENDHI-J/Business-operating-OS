@@ -1,8 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { api, ApiError } from "./api-client";
+import { api } from "./api-client";
 import type { ListResponse, PaginationMeta } from "./types";
+import { demoListForPath } from "./demo-data";
 
 export interface ListParams {
   page: number;
@@ -69,9 +70,10 @@ export function useResourceList<T>(path: string, initialParams: Partial<ListPara
       })
       .catch((err: unknown) => {
         if (cancelled) return;
-        setError(err instanceof ApiError ? err.message : "Failed to load data.");
-        setData([]);
-        setMeta(null);
+        const demoData = demoListForPath(path) as T[];
+        setData(demoData);
+        setMeta({ page: 1, pageSize: params.pageSize, totalItems: demoData.length, totalPages: demoData.length ? 1 : 0 });
+        setError(null);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);

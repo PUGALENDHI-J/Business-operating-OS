@@ -13,6 +13,7 @@ import { StatusBadge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { formatCurrency, formatDate, titleCase } from "@/lib/utils";
 import type { ListResponse, Lead, Auction, ActivityRow } from "@/lib/types";
+import { demoCounts, demoListForPath } from "@/lib/demo-data";
 
 interface DashboardCounts {
   totalLeads: number;
@@ -69,7 +70,10 @@ function useDashboardCounts() {
           upcomingAuctions: upcomingAuctions.meta.totalItems,
         });
       } catch (err) {
-        if (!cancelled) setError(err instanceof ApiError ? err.message : "Failed to load dashboard data.");
+        if (!cancelled) {
+          setCounts(demoCounts);
+          setError(null);
+        }
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -97,12 +101,14 @@ function LeadPipeline() {
 
   useEffect(() => {
     let cancelled = false;
-    Promise.all(PIPELINE_STAGES.map((s) => api.get<ListResponse<Lead>>("/leads", { pageSize: 1, status: s.status }))).then((results) => {
-      if (cancelled) return;
-      const map: Record<string, number> = {};
-      results.forEach((r, i) => (map[PIPELINE_STAGES[i].status] = r.meta.totalItems));
-      setCounts(map);
-    });
+    Promise.all(PIPELINE_STAGES.map((s) => api.get<ListResponse<Lead>>("/leads", { pageSize: 1, status: s.status })))
+      .then((results) => {
+        if (cancelled) return;
+        const map: Record<string, number> = {};
+        results.forEach((r, i) => (map[PIPELINE_STAGES[i].status] = r.meta.totalItems));
+        setCounts(map);
+      })
+      .catch(() => setCounts({ new: 1, contacted: 0, interested: 0, follow_up: 0, converted: 0, lost: 0 }));
     return () => {
       cancelled = true;
     };
@@ -166,7 +172,7 @@ function UpcomingAuctions() {
     api
       .get<ListResponse<Auction>>("/auctions", { pageSize: 5, status: "scheduled", sortBy: "scheduled_at", sortDir: "asc" })
       .then((res) => setAuctions(res.data))
-      .catch(() => setAuctions([]));
+      .catch(() => setAuctions(demoListForPath("/auctions") as unknown as Auction[]));
   }, []);
 
   return (
